@@ -7,13 +7,13 @@ import torch
 import uuid
 
 
-class Policy(torch.nn.Module):
+class PongPolicy(torch.nn.Module):
     def __init__(self, in_dim: int, hidden_dim: int, out_dim: int):
-        super(Policy, self).__init__()
+        super(PongPolicy, self).__init__()
         self.layer1 = torch.nn.Linear(in_dim, hidden_dim)
         self.relu = torch.nn.ReLU()
         self.layer2 = torch.nn.Linear(hidden_dim, out_dim)
-        self.sigmoid = torch.nn.Sigmoid()
+        self.softmax = torch.nn.Softmax(dim=0)
         self.reset()
         self.train()  # Set the module to training mode
 
@@ -21,7 +21,7 @@ class Policy(torch.nn.Module):
         x = self.layer1(x)
         x = self.relu(x)
         x = self.layer2(x)
-        x = self.sigmoid(x)
+        x = self.softmax(x)
         return x
 
     def reset(self):
@@ -29,12 +29,14 @@ class Policy(torch.nn.Module):
         self.rewards: list[float] = []
 
     def action(self, x: torch.Tensor):
-        a_prob = self.forward(x).item()
-        action = 2 if np.random.uniform() < a_prob else 3
-        y = 1 if action == 2 else 0
-        log_prob = torch.tensor(y - a_prob, requires_grad=True)
+        action_probs = self.forward(x)
+        dist = torch.distributions.Categorical(action_probs)
+        sample = dist.sample()
+        log_prob = dist.log_prob(sample)
         self.log_probs.append(log_prob)
-        return action
+        actions = torch.tensor([2, 3])  # Right (2), Left (3)
+        action = actions[sample]
+        return action.item()
 
 
 def pong_observation(observation):
@@ -50,7 +52,7 @@ def pong_observation(observation):
     return torch.from_numpy(I.astype(float).ravel()).float()
 
 
-def train(policy: Policy, optimizer: torch.optim.Optimizer, gamma: float) -> float:
+def train(policy: PongPolicy, optimizer: torch.optim.Optimizer, gamma: float) -> float:
     reward_count = len(policy.rewards)
     rewards_to_go = torch.empty(reward_count, dtype=float)
     reward_to_go = 0.0
@@ -81,6 +83,7 @@ def save_model(model: torch.nn.Module, run_id: str, metadata):
         os.mkdir(models_dir)
 
     model_run_dir = f"{models_dir}/{run_id}"
+
     if not os.path.exists(model_run_dir):
         os.mkdir(model_run_dir)
 
@@ -115,10 +118,10 @@ def main():
 
     if resume:
         model, metadata = load_model(run_id)
-        policy: Policy = model
+        policy: PongPolicy = model
         policy.reset()
     else:
-        policy = Policy(6400, 200, 1)
+        policy = PongPolicy(6400, 200, 2)
         metadata = {}
 
     # Hyperparameters
@@ -143,10 +146,10 @@ def main():
 
     observation, _ = env.reset()
 
-    for _ in range(1000000):
+    for _ in range(1_000_000):
         observation = pong_observation(observation)
         action = policy.action(observation)
-        observation, reward, terminated, truncated, _ = env.step(action)
+        observation, reward, terminated, truncated, info = env.step(action)
         policy.rewards.append(reward)
 
         if reward != 0 or terminated or truncated:
