@@ -13,7 +13,7 @@ def main():
     for _ in range(20_000):
         observation = pong_observation(observation)
         action = policy.action(observation)
-        env.step(action)
+        observation, _, _, _, _ = env.step(action)
 
 
 if __name__ == "__main__":
