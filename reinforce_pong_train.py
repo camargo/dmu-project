@@ -132,12 +132,8 @@ def main():
     aim_run["hparams"] = {"gamma": gamma, "learning_rate": learning_rate}
 
     # Initialization
-    env = gym.make("ALE/Pong-v5", render_mode="human")
+    env = gym.make("ALE/Pong-v5")
     optimizer = torch.optim.Adam(policy.parameters(), lr=learning_rate)
-
-    # Seeds
-    # torch.manual_seed(1337)
-    # env.seed(1337)
 
     for episode in range(1, 20_000):
         policy.reset()
@@ -147,9 +143,7 @@ def main():
             observation = pong_observation(observation)
             action = policy.action(observation)
             observation, reward, terminated, truncated, info = env.step(action)
-            frame_number = info.get("frame_number")
             policy.rewards.append(reward)
-            aim_run.track(reward, "reward", frame_number, episode)
 
             if terminated or truncated:
                 break
@@ -158,11 +152,14 @@ def main():
         avg_reward = mean(policy.rewards)
         total_reward = sum(policy.rewards)
 
+        frame_number = info.get("frame_number")
         aim_run.track(loss, "loss", frame_number, episode)
         aim_run.track(avg_reward, "avg_reward", frame_number, episode)
         aim_run.track(total_reward, "total_reward", frame_number, episode)
 
         save_model(policy, run_id, {})
+
+    env.close()
 
 
 if __name__ == "__main__":
