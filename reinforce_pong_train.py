@@ -1,10 +1,8 @@
 from aim import Run
 import gymnasium as gym
-import json
-import os
+from helpers import save_model
 from statistics import mean
 import torch
-import uuid
 
 
 class PongPolicy(torch.nn.Module):
@@ -72,66 +70,26 @@ def train(policy: PongPolicy, optimizer: torch.optim.Optimizer, gamma: float) ->
     return loss.item()
 
 
-def save_model(model: torch.nn.Module, run_id: str, metadata):
-    """
-    Save a model and associated metadata.
-    """
-
-    models_dir = ".models"
-
-    if not os.path.exists(models_dir):
-        os.mkdir(models_dir)
-
-    model_run_dir = f"{models_dir}/{run_id}"
-
-    if not os.path.exists(model_run_dir):
-        os.mkdir(model_run_dir)
-
-    torch.save(model, f"{model_run_dir}/model.pt")
-
-    with open(f"{model_run_dir}/model.json", "w") as f:
-        json.dump(metadata, f, indent=None)
-
-
-def load_model(run_id: str):
-    """
-    Load a model and associated metadata.
-    """
-
-    model_run_dir = f".models/{run_id}"
-
-    model: torch.nn.Module = torch.load(f"{model_run_dir}/model.pt")
-    model.eval()
-
-    with open(f"{model_run_dir}/model.json", "r") as f:
-        metadata = json.load(f)
-
-    return model, metadata
-
-
 def main():
     aim_run = Run()
-
-    resume = False
-    run_id = uuid.uuid4().hex
-
-    # resume = True
-    # run_id = "cf5e128fcf9543f58a5aab14744c733f"
-
-    if resume:
-        model, metadata = load_model(run_id)
-        policy: PongPolicy = model
-        policy.reset()
-    else:
-        policy = PongPolicy(6400, 200, 2)
-        metadata = {}
+    aim_run_id = aim_run.name.split(" ").pop()
 
     # Hyperparameters
-    gamma = metadata.get("gamma", 0.99)
-    learning_rate = metadata.get("learning_rate", 1e-4)
-    aim_run["hparams"] = {"gamma": gamma, "learning_rate": learning_rate}
+    in_dim = 6400
+    hidden_dim = 200
+    out_dim = 2
+    gamma = 0.99
+    learning_rate = 1e-4
+    aim_run["hparams"] = {
+        "gamma": gamma,
+        "hidden_dim": hidden_dim,
+        "in_dim": in_dim,
+        "learning_rate": learning_rate,
+        "out_dim": out_dim,
+    }
 
     # Initialization
+    policy = PongPolicy(in_dim, hidden_dim, out_dim)
     env = gym.make("ALE/Pong-v5")
     optimizer = torch.optim.Adam(policy.parameters(), lr=learning_rate)
 
@@ -157,7 +115,7 @@ def main():
         aim_run.track(avg_reward, "avg_reward", frame_number, episode)
         aim_run.track(total_reward, "total_reward", frame_number, episode)
 
-        save_model(policy, run_id, {})
+        save_model(policy, aim_run_id)
 
     env.close()
 

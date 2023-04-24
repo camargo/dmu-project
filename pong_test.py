@@ -1,10 +1,10 @@
 import gymnasium as gym
-from reinforce_pong_train import PongPolicy, load_model, pong_observation
+from helpers import load_model
+from reinforce_pong_train import PongPolicy, pong_observation
 
 
 def main():
-    model, _ = load_model("cf5e128fcf9543f58a5aab14744c733f")
-    policy: PongPolicy = model
+    policy: PongPolicy = load_model("b60ba6f06be54de99c2f890f")
     policy.reset()
 
     env = gym.make("ALE/Pong-v5", render_mode="human")
