@@ -75,16 +75,21 @@ def main():
     aim_run_id = aim_run.name.split(" ").pop()
 
     # Hyperparameters
-    in_dim = 6400
-    hidden_dim = 200
-    out_dim = 2
     gamma = 0.99
+    hidden_dim = 200
+    in_dim = 6400
     learning_rate = 1e-4
+    max_episodes = 20_000
+    max_steps_per_episode = 1_000
+    out_dim = 2
+
     aim_run["hparams"] = {
         "gamma": gamma,
         "hidden_dim": hidden_dim,
         "in_dim": in_dim,
         "learning_rate": learning_rate,
+        "max_episodes": max_episodes,
+        "max_steps_per_episode": max_steps_per_episode,
         "out_dim": out_dim,
     }
 
@@ -93,11 +98,11 @@ def main():
     env = gym.make("ALE/Pong-v5")
     optimizer = torch.optim.Adam(policy.parameters(), lr=learning_rate)
 
-    for episode in range(1, 20_000):
+    for episode in range(max_episodes):
         policy.reset()
         observation, _ = env.reset()
 
-        for _ in range(1, 1_000):
+        for _ in range(max_steps_per_episode):
             observation = pong_observation(observation)
             action = policy.action(observation)
             observation, reward, terminated, truncated, info = env.step(action)
