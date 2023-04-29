@@ -1,6 +1,6 @@
 import gymnasium as gym
 from helpers import load_model
-from reinforce_pong_train import PongPolicy, pong_observation
+from pong_train import PongPolicy, pong_observation
 
 
 def main():

@@ -6,6 +6,10 @@ import torch
 
 
 class PongPolicy(torch.nn.Module):
+    """
+    Simple feed-forward neural network policy.
+    """
+
     def __init__(self, in_dim: int, hidden_dim: int, out_dim: int):
         super(PongPolicy, self).__init__()
         self.layer1 = torch.nn.Linear(in_dim, hidden_dim)
@@ -50,7 +54,11 @@ def pong_observation(observation):
     return torch.from_numpy(I.ravel()).float()
 
 
-def train(policy: PongPolicy, optimizer: torch.optim.Optimizer, gamma: float) -> float:
+def policy_gradient(policy: PongPolicy, gamma: float) -> torch.Tensor:
+    """
+    Calculates the policy gradient (i.e. "loss") for a single policy trajectory.
+    """
+
     reward_count = len(policy.rewards)
     rewards_to_go = torch.empty(reward_count, dtype=float)
     reward_to_go = 0.0
@@ -60,14 +68,10 @@ def train(policy: PongPolicy, optimizer: torch.optim.Optimizer, gamma: float) ->
         rewards_to_go[t] = reward_to_go
 
     log_probs = torch.stack(policy.log_probs)
-    loss = -log_probs * rewards_to_go
-    loss = torch.sum(loss)
+    grad = -log_probs * rewards_to_go
+    grad = torch.sum(grad)
 
-    optimizer.zero_grad()
-    loss.backward()
-    optimizer.step()
-
-    return loss.item()
+    return grad
 
 
 def main():
@@ -80,9 +84,8 @@ def main():
     in_dim = 6400
     learning_rate = 1e-4
     max_episodes = 20_000
-    max_steps_per_episode = 1_000
+    max_steps_per_episode = 5_000
     out_dim = 2
-
     aim_run["hparams"] = {
         "gamma": gamma,
         "hidden_dim": hidden_dim,
@@ -111,12 +114,17 @@ def main():
             if terminated or truncated:
                 break
 
-        loss = train(policy, optimizer, gamma)
+        loss = policy_gradient(policy, gamma)
+
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
         avg_reward = mean(policy.rewards)
         total_reward = sum(policy.rewards)
 
         frame_number = info.get("frame_number")
-        aim_run.track(loss, "loss", frame_number, episode)
+        aim_run.track(loss.item(), "loss", frame_number, episode)
         aim_run.track(avg_reward, "avg_reward", frame_number, episode)
         aim_run.track(total_reward, "total_reward", frame_number, episode)
 
