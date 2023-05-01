@@ -76,7 +76,7 @@ def policy_gradient(policy: PongPolicy, gamma: float) -> torch.Tensor:
 
 def main():
     aim_run = Run()
-    aim_run_id = aim_run.name.split(" ").pop()
+    aim_run_hash = aim_run.hash
 
     # Hyperparameters
     gamma = 0.99
@@ -101,11 +101,11 @@ def main():
     env = gym.make("ALE/Pong-v5")
     optimizer = torch.optim.Adam(policy.parameters(), lr=learning_rate)
 
-    for episode in range(max_episodes):
+    for episode in range(1, max_episodes + 1):
         policy.reset()
         observation, _ = env.reset()
 
-        for _ in range(max_steps_per_episode):
+        for _ in range(1, max_steps_per_episode + 1):
             observation = pong_observation(observation)
             action = policy.action(observation)
             observation, reward, terminated, truncated, info = env.step(action)
@@ -115,7 +115,6 @@ def main():
                 break
 
         loss = policy_gradient(policy, gamma)
-
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
@@ -128,7 +127,9 @@ def main():
         aim_run.track(avg_reward, "avg_reward", frame_number, episode)
         aim_run.track(total_reward, "total_reward", frame_number, episode)
 
-        save_model(policy, aim_run_id)
+        print(f"Finished episode: {episode}, Total Reward: {total_reward}, Average reward {avg_reward}")
+
+        save_model(policy, aim_run_hash, {"aim_run_hash": aim_run_hash})
 
     env.close()
 
