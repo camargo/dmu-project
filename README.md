@@ -6,6 +6,8 @@ Repository for my Spring 2023 Decision Making Under Uncertainty final project. I
 
 Here is a demo of one of the trained agents (a53b7b) playing and winning against the computer.
 
+https://user-images.githubusercontent.com/683355/235566498-97fada0a-9d09-41cb-87b5-6b44b51dc6ea.mp4
+
 ## Source Files
 
 | File                | Description                                                 |
