@@ -1,4 +1,5 @@
 import gymnasium as gym
+from gymnasium.wrappers import RecordVideo
 from model_helpers import load_model
 from pong_train import PongPolicy, pong_observation
 
@@ -6,8 +7,14 @@ from pong_train import PongPolicy, pong_observation
 def main():
     policy: PongPolicy = load_model("a53b7b3457f14f4e99172150")
     policy.reset()
+    record_video = True
 
-    env = gym.make("ALE/Pong-v5", render_mode="human")
+    env = gym.make("ALE/Pong-v5", render_mode="rgb_array")
+
+    if record_video:
+        env = RecordVideo(env, "videos", name_prefix="pong-agent")
+        env.metadata["render_fps"] = 30
+
     observation, _ = env.reset()
 
     total_reward = 0
@@ -20,6 +27,9 @@ def main():
         total_reward += reward
 
         if terminated or truncated:
+            if record_video:
+                break
+
             total_games += 1
 
             print(f"{info=}")
