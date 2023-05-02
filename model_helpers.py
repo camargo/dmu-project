@@ -9,7 +9,7 @@ def load_model(id: str):
     Load a model by ID.
     """
 
-    model: torch.nn.Module = torch.load(f".models/{id}/model.pt")
+    model: torch.nn.Module = torch.load(f"models/{id}/model.pt")
     model.eval()
 
     return model
@@ -20,7 +20,7 @@ def save_model(model: torch.nn.Module, id: str, metadata: Any = {}):
     Save a model by ID, and associated optional metadata.
     """
 
-    models_dir = ".models"
+    models_dir = "models"
 
     if not os.path.exists(models_dir):
         os.mkdir(models_dir)

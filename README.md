@@ -14,7 +14,7 @@ Repository for 2023 CU DMU final project.
 
 ## Models
 
-Models were trained with PyTorch using Reinforcement Learning and a policy gradient. They are stored in the [.models](./.models) directory. Complete metrics were collected with [Aim](https://github.com/aimhubio/aim).
+Models were trained with PyTorch using Reinforcement Learning and a policy gradient. They are stored in the [models](./models) directory. Complete metrics were collected with [Aim](https://github.com/aimhubio/aim).
 
 | Model ID                 | Train Time  | Total Fames | Total Layers | Hidden Dim | Max Episodes | Max Steps / Episode | Gamma | Learning Rate | Batch Size | Reward-to-Go | Baseline Subtraction |
 | ------------------------ | ----------- | ----------- | ------------ | ---------- | ------------ | ------------------- | ----- | ------------- | ---------- | ------------ | -------------------- |
