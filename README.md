@@ -30,8 +30,12 @@ source env/bin/activate
 
 ## Install Dependencies
 
-First make sure your environment is activated.
-
 ```sh
 python -m pip install -r requirements.txt
+```
+
+## Run Model
+
+```sh
+python pong_test.py
 ```
