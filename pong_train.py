@@ -7,7 +7,7 @@ import torch
 
 class PongPolicy(torch.nn.Module):
     """
-    Simple feed-forward neural network policy.
+    Simple 3-layer (in, hidden, out) feed-forward neural network policy.
     """
 
     def __init__(self, in_dim: int, hidden_dim: int, out_dim: int):
