@@ -4,9 +4,7 @@ Repository for my Spring 2023 Decision Making Under Uncertainty final project. I
 
 ## Agent Demo
 
-Here is a demo of one of the trained agents playing and winning against the computer.
-
-<video controls width="300" src="./videos/pong-agent-episode-0.mp4"></video>
+Here is a demo of one of the trained agents (a53b7b) playing and winning against the computer.
 
 ## Source Files
 
