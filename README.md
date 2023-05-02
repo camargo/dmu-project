@@ -1,6 +1,14 @@
 # dmu-project
 
-Repository for 2023 CU DMU final project.
+Repository for my Spring 2023 Decision Making Under Uncertainty final project. I investigated the performance of a reinforcement learning agent trained using a policy gradient to play Atari Pong.
+
+## Agent Demo
+
+Here is a demo of one of the trained agents playing and winning against the computer.
+
+<video align="center" controls width="300px">
+  <source src="./videos/pong-agent-episode-0.mp4" type="video/mp4" />
+</video>
 
 ## Source Files
 
