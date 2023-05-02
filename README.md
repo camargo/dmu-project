@@ -6,16 +6,16 @@ Repository for 2023 CU DMU final project.
 
 Models were trained with PyTorch using Reinforcement Learning and a policy gradient. They are stored in the [.models](./.models) directory. Complete metrics were collected with [Aim](https://github.com/aimhubio/aim).
 
-| Model ID                 | Short Description                                                       |
-| ------------------------ | ----------------------------------------------------------------------- |
-| b60ba6f06be54de99c2f890f | 200 neuron single hidden layer network with 1000 max steps per episode. |
-| a53b7b3457f14f4e99172150 | 200 neuron single hidden layer network with 5000 max steps per episode. |
+| Model ID                 | Train Time  | Total Layers | Hidden Dim | Max Episodes | Max Steps / Episode | Gamma | Learning Rate | Batch Size | Reward-to-Go | Baseline Subtraction |
+| ------------------------ | ----------- | ------------ | ---------- | ------------ | ------------------- | ----- | ------------- | ---------- | ------------ | -------------------- |
+| a53b7b3457f14f4e99172150 | 38hrs       | 3            | 200        | 20000        | 5000                | 0.99  | 0.0001        | 1          | ✅           | ❌                   |
+| b60ba6f06be54de99c2f890f | 12hrs 29min | 3            | 200        | 20000        | 1000                | 0.99  | 0.0001        | 1          | ✅           | ❌                   |
 
 ## Source Files
 
 | File                | Description                                              |
 | ------------------- | -------------------------------------------------------- |
-| helpers.py          | Helper functions for saving and loading PyTorch models.  |
+| model_helpers.py    | Helper functions for saving and loading PyTorch models.  |
 | play.py             | Fun script for playing games in the Atari gym.           |
 | pong_test.py        | Test script that tests the trained Pong agent.           |
 | pong_train.py       | Train script that trains Pong agent via policy gradient. |

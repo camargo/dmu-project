@@ -1,6 +1,6 @@
 from aim import Run
 import gymnasium as gym
-from helpers import save_model
+from model_helpers import save_model
 from statistics import mean
 import torch
 
