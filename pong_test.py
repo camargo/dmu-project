@@ -5,15 +5,16 @@ from pong_train import PongPolicy, pong_observation
 
 
 def main():
-    policy: PongPolicy = load_model("a53b7b3457f14f4e99172150")
+    policy: PongPolicy = load_model("2b9c7df2eca04bb49e31404f")
     policy.reset()
-    record_video = True
-
-    env = gym.make("ALE/Pong-v5", render_mode="rgb_array")
+    record_video = False
 
     if record_video:
+        env = gym.make("ALE/Pong-v5", render_mode="rgb_array")
         env = RecordVideo(env, "videos", name_prefix="pong-agent")
         env.metadata["render_fps"] = 30
+    else:
+        env = gym.make("ALE/Pong-v5", render_mode="human")
 
     observation, _ = env.reset()
 
