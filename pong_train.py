@@ -67,6 +67,9 @@ def policy_gradient(policy: PongPolicy, gamma: float) -> torch.Tensor:
         reward_to_go = policy.rewards[t] + gamma * reward_to_go
         rewards_to_go[t] = reward_to_go
 
+    # Baseline subtraction
+    rewards_to_go -= torch.mean(rewards_to_go)
+
     log_probs = torch.stack(policy.log_probs)
     grad = -log_probs * rewards_to_go
     grad = torch.sum(grad)
