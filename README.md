@@ -24,6 +24,7 @@ Models were trained with PyTorch using Reinforcement Learning and a policy gradi
 
 | Model ID                 | Train Time  | Total Fames | Total Layers | Hidden Dim | Max Episodes | Max Steps / Episode | Gamma | Learning Rate | Batch Size | Reward-to-Go | Baseline Subtraction |
 | ------------------------ | ----------- | ----------- | ------------ | ---------- | ------------ | ------------------- | ----- | ------------- | ---------- | ------------ | -------------------- |
+| 2b9c7df2eca04bb49e31404f | 35hrs       | 367,556,707 | 3            | 200        | 20000        | 5000                | 0.99  | 0.0001        | 1          | ✅           | ✅                   |
 | a53b7b3457f14f4e99172150 | 38hrs       | 335,928,545 | 3            | 200        | 20000        | 5000                | 0.99  | 0.0001        | 1          | ✅           | ❌                   |
 | b60ba6f06be54de99c2f890f | 12hrs 29min | 79,861,221  | 3            | 200        | 20000        | 1000                | 0.99  | 0.0001        | 1          | ✅           | ❌                   |
 
