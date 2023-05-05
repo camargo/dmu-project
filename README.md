@@ -22,11 +22,13 @@ https://user-images.githubusercontent.com/683355/235566498-97fada0a-9d09-41cb-87
 
 Models were trained with PyTorch using Reinforcement Learning and a policy gradient. They are stored in the [models](./models) directory. Complete metrics were collected with [Aim](https://github.com/aimhubio/aim).
 
-| Model ID                 | Train Time  | Total Fames | Reward-to-Go | Baseline Subtraction | Max Steps / Episode | Total Layers | Hidden Dim | Max Episodes | Gamma | Learning Rate | Batch Size |
-| ------------------------ | ----------- | ----------- | ------------ | -------------------- | ------------------- | ------------ | ---------- | ------------ | ----- | ------------- | ---------- |
-| 2b9c7df2eca04bb49e31404f | 35hrs       | 367,556,707 | ✅           | ✅                   | 5000                | 3            | 200        | 20000        | 0.99  | 0.0001        | 1          |
-| a53b7b3457f14f4e99172150 | 38hrs       | 335,928,545 | ✅           | ❌                   | 5000                | 3            | 200        | 20000        | 0.99  | 0.0001        | 1          |
-| b60ba6f06be54de99c2f890f | 12hrs 29min | 79,861,221  | ✅           | ❌                   | 1000                | 3            | 200        | 20000        | 0.99  | 0.0001        | 1          |
+| Model ID                 | Train Time  | Win Rate | Total Fames | Reward-to-Go | Baseline Subtraction | Max Steps / Episode | Total Layers | Hidden Dim | Max Episodes | Gamma | Learning Rate | Batch Size |
+| ------------------------ | ----------- | -------- | ----------- | ------------ | -------------------- | ------------------- | ------------ | ---------- | ------------ | ----- | ------------- | ---------- |
+| 2b9c7df2eca04bb49e31404f | 35hrs       | 93%      | 367,556,707 | ✅           | ✅                   | 5000                | 3            | 200        | 20000        | 0.99  | 0.0001        | 1          |
+| a53b7b3457f14f4e99172150 | 38hrs       | 97%      | 335,928,545 | ✅           | ❌                   | 5000                | 3            | 200        | 20000        | 0.99  | 0.0001        | 1          |
+| b60ba6f06be54de99c2f890f | 12hrs 29min | 28%      | 79,861,221  | ✅           | ❌                   | 1000                | 3            | 200        | 20000        | 0.99  | 0.0001        | 1          |
+
+- Win rate calculated over the result of 100 games played. See [pong_test.py](./pong_test.py) for how this is computed.
 
 ## Create and Activate Environment
 
