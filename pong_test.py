@@ -52,6 +52,7 @@ def main():
             elif computer_score == 21:
                 total_computer_wins += 1
 
+            print(f"{info=}")
             print(f"Agent score: {agent_score}, Computer score: {computer_score}")
             print(f"Total games: {total_games}")
             print(f"Total agent wins: {total_agent_wins}, Total computer wins: {total_computer_wins}")
