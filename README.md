@@ -22,11 +22,11 @@ https://user-images.githubusercontent.com/683355/235566498-97fada0a-9d09-41cb-87
 
 Models were trained with PyTorch using Reinforcement Learning and a policy gradient. They are stored in the [models](./models) directory. Complete metrics were collected with [Aim](https://github.com/aimhubio/aim).
 
-| Model ID                 | Train Time  | Total Fames | Total Layers | Hidden Dim | Max Episodes | Max Steps / Episode | Gamma | Learning Rate | Batch Size | Reward-to-Go | Baseline Subtraction |
-| ------------------------ | ----------- | ----------- | ------------ | ---------- | ------------ | ------------------- | ----- | ------------- | ---------- | ------------ | -------------------- |
-| 2b9c7df2eca04bb49e31404f | 35hrs       | 367,556,707 | 3            | 200        | 20000        | 5000                | 0.99  | 0.0001        | 1          | ✅           | ✅                   |
-| a53b7b3457f14f4e99172150 | 38hrs       | 335,928,545 | 3            | 200        | 20000        | 5000                | 0.99  | 0.0001        | 1          | ✅           | ❌                   |
-| b60ba6f06be54de99c2f890f | 12hrs 29min | 79,861,221  | 3            | 200        | 20000        | 1000                | 0.99  | 0.0001        | 1          | ✅           | ❌                   |
+| Model ID                 | Train Time  | Total Fames | Reward-to-Go | Baseline Subtraction | Total Layers | Hidden Dim | Max Episodes | Max Steps / Episode | Gamma | Learning Rate | Batch Size |
+| ------------------------ | ----------- | ----------- | ------------ | -------------------- | ------------ | ---------- | ------------ | ------------------- | ----- | ------------- | ---------- |
+| 2b9c7df2eca04bb49e31404f | 35hrs       | 367,556,707 | ✅           | ✅                   | 3            | 200        | 20000        | 5000                | 0.99  | 0.0001        | 1          |
+| a53b7b3457f14f4e99172150 | 38hrs       | 335,928,545 | ✅           | ❌                   | 3            | 200        | 20000        | 5000                | 0.99  | 0.0001        | 1          |
+| b60ba6f06be54de99c2f890f | 12hrs 29min | 79,861,221  | ✅           | ❌                   | 3            | 200        | 20000        | 1000                | 0.99  | 0.0001        | 1          |
 
 ## Create and Activate Environment
 
