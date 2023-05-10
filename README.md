@@ -1,6 +1,6 @@
 # dmu-project
 
-Repository for my Spring 2023 Decision Making Under Uncertainty final project. I investigated the performance of a reinforcement learning agent trained using a policy gradient to play Atari Pong.
+Repository for my Spring 2023 Decision Making Under Uncertainty final project. I investigated the performance of a reinforcement learning agent trained using a policy gradient to play Atari Pong. You can read the [final report here](./final-report.pdf).
 
 ## Agent Demo
 
@@ -24,11 +24,13 @@ Models were trained with PyTorch using Reinforcement Learning and a policy gradi
 
 | Agent | ID                       | Train Time  | Win Rate | Total Fames | Reward-to-Go | Baseline Subtraction | Max Steps / Episode | Total Layers | Hidden Dim | Episodes | Gamma | Learning Rate |
 | ----- | ------------------------ | ----------- | -------- | ----------- | ------------ | -------------------- | ------------------- | ------------ | ---------- | -------- | ----- | ------------- |
-| 3     | 2b9c7df2eca04bb49e31404f | 35hrs       | 95%      | 367,556,707 | ✅           | ✅                   | 5000                | 3            | 200        | 20000    | 0.99  | 0.0001        |
-| 2     | a53b7b3457f14f4e99172150 | 38hrs       | 95%      | 335,928,545 | ✅           | ❌                   | 5000                | 3            | 200        | 20000    | 0.99  | 0.0001        |
-| 1     | b60ba6f06be54de99c2f890f | 12hrs 29min | 28%      | 79,861,221  | ✅           | ❌                   | 1000                | 3            | 200        | 20000    | 0.99  | 0.0001        |
+| 4     | f0d3a1baf6a04e9380841bc5 | 109hrs      | ~62%     | 506,007,959 | ✅           | ✅                   | None                | 3            | 300        | 20000    | 0.99  | 0.0001        |
+| 3     | 2b9c7df2eca04bb49e31404f | 35hrs       | ~95%     | 367,556,707 | ✅           | ✅                   | 5000                | 3            | 200        | 20000    | 0.99  | 0.0001        |
+| 2     | a53b7b3457f14f4e99172150 | 38hrs       | ~95%     | 335,928,545 | ✅           | ❌                   | 5000                | 3            | 200        | 20000    | 0.99  | 0.0001        |
+| 1     | b60ba6f06be54de99c2f890f | 12hrs 29min | ~28%     | 79,861,221  | ✅           | ❌                   | 1000                | 3            | 200        | 20000    | 0.99  | 0.0001        |
 
 - Win rate calculated over the result of 100 games played. See [pong_test.py](./pong_test.py) for how this is computed.
+- Agent 4 not included in final report since it took too long to train.
 
 ## Create and Activate Environment
 
