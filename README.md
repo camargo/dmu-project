@@ -43,6 +43,7 @@ source env/bin/activate
 
 ```sh
 python -m pip install -r requirements.txt
+pip install gym\[accept-rom-license\]
 ```
 
 ## Run Model
